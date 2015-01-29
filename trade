@@ -1,0 +1,3 @@
+#!/usr/bin/Rscript
+a <- 9
+print(a)
