@@ -1,3 +1,7 @@
 #!/usr/bin/Rscript
-a <- 9
-print(a)
+f <- file("titres.txt") #Modifier le bruteforce par l'argv[1] !
+open(f)
+while (length(line <- readLines(f, n=1)) > 0)
+{
+      print(line)
+}
