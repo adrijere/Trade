@@ -1,7 +1,7 @@
 #include "Trade.hpp"
 
 Trade::Trade(int money, int totalDay)
-	: _money(money), _totalDay(totalDay), _currentDay(1)
+	: _money(money), _totalDay(totalDay), _currentDay(0)
 {}
 
 Trade::~Trade()
