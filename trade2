@@ -1,9 +1,0 @@
-#!/usr/bin/Rscript
-
-options <- commandArgs(trailingOnly = TRUE)
-f <- file(options[1])
-open(f)
-while (length(line <- readLines(f, n=1)) > 0)
-{
-      print(line)
-}
