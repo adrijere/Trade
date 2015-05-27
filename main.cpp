@@ -11,7 +11,7 @@ int main()
 	Trade trader(money, totalDay);
 
 	std::cin >> currentCours;
-	while (currentCours != "--END--")
+	while (currentCours != "--END--" && trader.getCurrentDay() < trader.getTotalDay())
 	{
 		trader.trade(atoi(currentCours.c_str()));
 		currentCours = "";

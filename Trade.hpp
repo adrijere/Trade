@@ -6,12 +6,15 @@
 # include <list>
 # include <stdlib.h>
 
+
+
 class Trade
 {
 private:
 	int _money;
 	int _totalDay;
 	int _currentDay;
+	int _actions;
 	std::list<int> _oldValues;
 public:
 	Trade(int, int);
@@ -26,6 +29,10 @@ public:
 
 	void addValue(int);
 	void delValue();
+
+	void buy(int, int);
+	void sell(int, int);
+	void wait();
 
 	void trade(int);
 };
