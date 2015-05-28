@@ -91,7 +91,7 @@ int Trade::checkValue(int newValue)
 	moyenne = 0;
 	for (std::list<int>::iterator it = this->_oldValues.begin(); it != this->_oldValues.end(); ++it)
 	{
-		if (i < 5)
+		if (i < NBVAL)
 			moyenne += (*it);
 		else
 			break ;
@@ -102,7 +102,7 @@ int Trade::checkValue(int newValue)
 	variance = 0;
 	for (std::list<int>::iterator it = this->_oldValues.begin(); it != this->_oldValues.end(); ++it)
 	{
-		if (i < 5)
+		if (i < NBVAL)
 			variance += pow(((*it) - moyenne), 2);
 		else
 			break ;
@@ -111,9 +111,25 @@ int Trade::checkValue(int newValue)
 	variance /= i;
 	ecartType = sqrt(variance);
 	if (newValue > moyenne + ecartType)
-		return (1);
+	{
+		i = 0;
+		while (newValue > moyenne + ecartType)
+		{
+			i++;
+			moyenne += ecartType * i;
+		}
+		return (/*i*/1);
+	}
 	else if (newValue < moyenne - ecartType)
-		return (-1);
+	{
+		i = 0;
+		while (newValue < moyenne + ecartType)
+		{
+			i++;
+			moyenne -= ecartType * i;
+		}
+		return (/*0 - i*/-1);
+	}
 	else
 		return (0);
 }
@@ -124,7 +140,7 @@ void Trade::trade(int newValue)
 
 	if (this->_currentDay == this->_totalDay - 1)
 		this->sell(newValue, this->_actions);
-	else if (this->_oldValues.size() < 5)
+	else if (this->_oldValues.size() < NBVAL)
 		this->wait();
 	else 
 	{

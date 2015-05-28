@@ -7,6 +7,8 @@
 # include <stdlib.h>
 # include <math.h>
 
+# define NBVAL 5
+
 class Trade
 {
 private:
