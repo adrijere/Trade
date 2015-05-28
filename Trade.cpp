@@ -80,16 +80,62 @@ void Trade::wait()
 	std::cout << "wait" << std::endl;
 }
 
+int Trade::checkValue(int newValue)
+{
+	int i;
+	int moyenne;
+	int variance;
+	int ecartType;
+
+	i = 0;
+	moyenne = 0;
+	for (std::list<int>::iterator it = this->_oldValues.begin(); it != this->_oldValues.end(); ++it)
+	{
+		if (i < 5)
+			moyenne += (*it);
+		else
+			break ;
+		i++;
+	}
+	moyenne /= i;
+	i = 0;
+	variance = 0;
+	for (std::list<int>::iterator it = this->_oldValues.begin(); it != this->_oldValues.end(); ++it)
+	{
+		if (i < 5)
+			variance += pow(((*it) - moyenne), 2);
+		else
+			break ;
+		i++;
+	}
+	variance /= i;
+	ecartType = sqrt(variance);
+	if (newValue > moyenne + ecartType)
+		return (1);
+	else if (newValue < moyenne - ecartType)
+		return (-1);
+	else
+		return (0);
+}
+
 void Trade::trade(int newValue)
 {
+	int nb;
+
 	if (this->_currentDay == this->_totalDay - 1)
 		this->sell(newValue, this->_actions);
-	else if (this->_oldValues.size() > 0 && newValue > this->_oldValues.front())
-		this->buy(newValue, 1);
-	else if (this->_oldValues.size() > 0 && newValue < this->_oldValues.front())
-		this->sell(newValue, 1);
-	else
+	else if (this->_oldValues.size() < 5)
 		this->wait();
+	else 
+	{
+		nb = this->checkValue(newValue);
+		if (nb > 0)
+			this->buy(newValue, nb);
+		else if (nb < 0)
+			this->sell(newValue, 0 - nb);
+		else
+			this->wait();
+	}
 
 	this->addValue(newValue);
 	this->_currentDay++;

@@ -5,8 +5,7 @@
 # include <string>
 # include <list>
 # include <stdlib.h>
-
-
+# include <math.h>
 
 class Trade
 {
@@ -34,6 +33,7 @@ public:
 	void sell(int, int);
 	void wait();
 
+	int checkValue(int);
 	void trade(int);
 };
 
