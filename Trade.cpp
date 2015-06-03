@@ -84,61 +84,65 @@ void Trade::init(int &moyenne, int &variance, int &ecartType)
 {
 	int i;
 
-	i = 0;
-	moyenne = 0;
-	for (std::list<int>::iterator it = this->_oldValues.begin(); it != this->_oldValues.end(); ++it)
-	{
-		if (i < NBVAL)
-			moyenne += (*it);
-		else
-			break ;
-		i++;
-	}
-	moyenne /= i;
-	i = 0;
-	variance = 0;
-	for (std::list<int>::iterator it = this->_oldValues.begin(); it != this->_oldValues.end(); ++it)
-	{
-		if (i < NBVAL)
-			variance += pow(((*it) - moyenne), 2);
-		else
-			break ;
-		i++;
-	}
-	variance /= i;
-	ecartType = sqrt(variance);
+  i = 0;
+  moyenne = 0;
+  for (std::list<int>::iterator it = this->_oldValues.begin(); it != this->_oldValues.end(); ++it)
+    {
+      if (i < NBVAL)
+	moyenne += (*it);
+      else
+	break ;
+      i++;
+    }
+  moyenne /= i;
+  i = 0;
+  variance = 0;
+  for (std::list<int>::iterator it = this->_oldValues.begin(); it != this->_oldValues.end(); ++it)
+    {
+      if (i < NBVAL)
+	variance += pow(((*it) - moyenne), 2);
+      else
+	break ;
+      i++;
+    }
+  variance /= i;
+  ecartType = sqrt(variance);
 }
 
 int Trade::checkValue(int newValue)
 {
-	int i;
-	int moyenne;
-	int variance;
-	int ecartType;
+  int i;
+  int moyenne;
+  int variance;
+  int ecartType;
 
-	this->init(moyenne, variance, ecartType);
-	if (newValue > moyenne + ecartType)
+  this->init(moyenne, variance, ecartType);
+  if (newValue > moyenne + ecartType)
+    {
+      i = 0;
+      while (newValue > moyenne + ecartType)
 	{
-		i = 0;
-		while (newValue > moyenne + ecartType)
-		{
-			i++;
-			moyenne += ecartType * i;
-		}
-		return (/*i*/1);
+	  i++;
+	  moyenne += ecartType * i;
 	}
-	else if (newValue < moyenne - ecartType)
+      if (newValue < ((this->_money / 2)))
+	  return (1);
+      return (i);
+    }
+  else if (newValue < moyenne - ecartType)
+    {
+      i = 0;
+      while (newValue < moyenne + ecartType)
 	{
-		i = 0;
-		while (newValue < moyenne + ecartType)
-		{
-			i++;
-			moyenne -= ecartType * i;
-		}
-		return (/*0 - i*/-1);
+	  i++;
+	  moyenne -= ecartType * i;
 	}
-	else
-		return (0);
+      if (newValue > ((this->_money / 100) * 10))
+	return (-1);
+      return (0 - i);
+    }
+  else
+    return (0);
 }
 
 void Trade::trade(int newValue)
