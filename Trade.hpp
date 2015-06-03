@@ -35,6 +35,7 @@ public:
 	void sell(int, int);
 	void wait();
 
+	void init(int &, int &, int &);
 	int checkValue(int);
 	void trade(int);
 };

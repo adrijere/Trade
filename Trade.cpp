@@ -80,12 +80,9 @@ void Trade::wait()
 	std::cout << "wait" << std::endl;
 }
 
-int Trade::checkValue(int newValue)
+void Trade::init(int &moyenne, int &variance, int &ecartType)
 {
 	int i;
-	int moyenne;
-	int variance;
-	int ecartType;
 
 	i = 0;
 	moyenne = 0;
@@ -110,6 +107,16 @@ int Trade::checkValue(int newValue)
 	}
 	variance /= i;
 	ecartType = sqrt(variance);
+}
+
+int Trade::checkValue(int newValue)
+{
+	int i;
+	int moyenne;
+	int variance;
+	int ecartType;
+
+	this->init(moyenne, variance, ecartType);
 	if (newValue > moyenne + ecartType)
 	{
 		i = 0;
