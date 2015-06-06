@@ -126,7 +126,7 @@ int Trade::checkValue(int newValue)
 	  moyenne += ecartType * i;
 	}
       if (newValue < ((this->_money / 2)))
-	  return (1);
+	  	return (1);
       return (i);
     }
   else if (newValue < moyenne - ecartType)
@@ -138,7 +138,7 @@ int Trade::checkValue(int newValue)
 	  moyenne -= ecartType * i;
 	}
       if (newValue > ((this->_money / 100) * 10))
-	return (-1);
+		return (-1);
       return (0 - i);
     }
   else
